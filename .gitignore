@@ -5,3 +5,4 @@ ros_ws/build
 ros_ws/install
 ros_ws/log
 ros_ws/src/LSTR/raws
+ros_ws/src/PyTorchMPC/obs_data
