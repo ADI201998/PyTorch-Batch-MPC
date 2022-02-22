@@ -4,3 +4,4 @@ ros_ws/src/highway_car/highway_car/ngsim_data2.csv
 ros_ws/build
 ros_ws/install
 ros_ws/log
+ros_ws/src/LSTR/raws
