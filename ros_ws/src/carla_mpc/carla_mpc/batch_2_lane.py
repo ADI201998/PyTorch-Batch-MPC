@@ -21,7 +21,7 @@ from simple_pid import PID
 import math
 
 from agents.navigation.global_route_planner import GlobalRoutePlanner
-from carla_birdeye_view import BirdViewProducer, BirdViewCropType, PixelDimensions
+# from carla_birdeye_view import BirdViewProducer, BirdViewCropType, PixelDimensions
 import matplotlib.pyplot as plt
 import cv2
 import csv
@@ -149,13 +149,13 @@ class CarlaSyncBatch(object):
 		self.tm_port = self.tm.get_port()
 		self.grp = GlobalRoutePlanner(self.m, 0.25)
 
-		self.birdview_producer = BirdViewProducer(
-				self.client,  # carla.Client
-				target_size=PixelDimensions(width=300, height=800),
-				pixels_per_meter=4,
-				crop_type=BirdViewCropType.FRONT_AND_REAR_AREA,
-				render_lanes_on_junctions=False
-			)
+		# self.birdview_producer = BirdViewProducer(
+		# 		self.client,  # carla.Client
+		# 		target_size=PixelDimensions(width=300, height=800),
+		# 		pixels_per_meter=4,
+		# 		crop_type=BirdViewCropType.FRONT_AND_REAR_AREA,
+		# 		render_lanes_on_junctions=False
+		# 	)
 		self.bv_img_x = 300
 		self.bv_img_y = 800
 		self.blueprint_library = self.world.get_blueprint_library()
@@ -278,7 +278,7 @@ class CarlaSyncBatch(object):
 
 				self.tm.ignore_lights_percentage(car,100)
 				self.tm.distance_to_leading_vehicle(car, -2.0)
-				speed = [30, 40, 50]
+				speed = [60, 70, 80]
 				self.tm.vehicle_percentage_speed_difference(car,random.choice(speed))
 
 			car.set_autopilot(False)
@@ -365,12 +365,12 @@ class CarlaSyncBatch(object):
 		pygame.display.flip()
 
 		self.pre_sel_psi = []
-		birdview = self.birdview_producer.produce(
-					agent_vehicle=self.vehicle  # carla.Actor (spawned vehicle)
-		)
+		# birdview = self.birdview_producer.produce(
+		# 			agent_vehicle=self.vehicle  # carla.Actor (spawned vehicle)
+		# )
 		# Use only if you want to visualize
 		# produces np.ndarray of shape (height, width, 3)
-		rgb = BirdViewProducer.as_rgb(birdview)
+		# rgb = BirdViewProducer.as_rgb(birdview)
 		if self.vis_path:
 			prev = 0
 			for i in range(self.num_goal):
@@ -405,9 +405,9 @@ class CarlaSyncBatch(object):
 					self.pre_sel_psi = np.unwrap(self.pre_sel_psi)
 					self.selected_pose = poses
 					#print(self.pre_sel_psi)
-					cv2.polylines(rgb,np.int32([path_pixels]),False,(0,255,0), 2)
-				else:
-					cv2.polylines(rgb,np.int32([path_pixels]),False,(0,0,255), 1)
+				# 	cv2.polylines(rgb,np.int32([path_pixels]),False,(0,255,0), 2)
+				# else:
+				# 	cv2.polylines(rgb,np.int32([path_pixels]),False,(0,0,255), 1)
 				prev += self.steps[i]
 		#cv2.imshow('bv', rgb)
 		#cv2.waitKey(10)
